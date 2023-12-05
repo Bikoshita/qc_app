@@ -1,0 +1,159 @@
+const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+
+require("dotenv").config();
+const db = require("../config/dbConnection");
+
+const getTests = (req, res) => {
+    // console.log(req.query.id);
+
+    let testId = req.query.id;
+    let query = `SELECT * FROM level_test_type`;
+
+    if(typeof testId != "undefined"){
+        query = `SELECT * FROM level_test_type where id = ${testId}`;
+
+    }
+
+    db.query(query,(err,result) => {
+        let data = "";
+
+        if (err) {
+            return res.status(400).send ({
+                "err in select query": err
+            })
+        } else if(result.length){
+
+            if(testId == 1){
+                data = {
+                    'id': result[0].id,
+                    'type': result[0].type,
+                    'runs': result[0].runs,
+                    'is_blank': result[0].is_blank,
+                    'is_insertion': result[0].is_insertion,
+                    'insertion_limit': result[0].insertion_limit,
+                    'is_water': result[0].is_water,
+                    'duration': result[0].duration,
+                    'status': result[0].status,
+                }
+                // console.log("data is",data);
+            }
+
+            else if(testId == 2){
+                data = {
+                    'id': result[0].id,
+                    'type': result[0].type,
+                    'runs': result[0].runs,
+                    // 'is_blank': result[0].is_blank,
+                    // 'is_insertion': result[0].is_insertion,
+                    // 'insertion_limit': result[0].insertion_limit,
+                    'is_water': result[0].is_water,
+                    'duration': result[0].duration,
+                    'status': result[0].status,
+                }
+            }
+
+            else if(testId == 3){
+                data = {
+                    'id': result[0].id,
+                    'type': result[0].type,
+                    'runs': result[0].runs,
+                    // 'is_blank': result[0].is_blank,
+                    'is_insertion': result[0].is_insertion,
+                    'insertion_limit': result[0].insertion_limit,
+                    'is_water': result[0].is_water,
+                    // 'duration': result[0].duration,
+                    'status': result[0].status,
+                }
+                // console.log("data is",data);
+            }
+
+            else if(testId == 4){
+                data = {
+                    'id': result[0].id,
+                    'type': result[0].type,
+                    'runs': result[0].runs,
+                    // 'is_blank': result[0].is_blank,
+                    'is_insertion': result[0].is_insertion,
+                    'insertion_limit': result[0].insertion_limit,
+                    // 'is_water': result[0].is_water,
+                    // 'duration': result[0].duration,
+                    'status': result[0].status,
+                }
+                // console.log("data is",data);
+            }
+
+            else if(testId == 5){
+                data = {
+                    'id': result[0].id,
+                    'type': result[0].type,
+                    'runs': result[0].runs,
+                    'is_blank': result[0].is_blank,
+                    // 'is_insertion': result[0].is_insertion,
+                    // 'insertion_limit': result[0].insertion_limit,
+                    // 'is_water': result[0].is_water,
+                    'duration': result[0].duration,
+                    'status': result[0].status,
+                }
+                // console.log("data is",data);
+            }
+
+            else if(testId == 6){
+                data = {
+                    'id': result[0].id,
+                    'type': result[0].type,
+                    'runs': result[0].runs,
+                    // 'is_blank': result[0].is_blank,
+                    // 'is_insertion': result[0].is_insertion,
+                    // 'insertion_limit': result[0].insertion_limit,
+                    'is_water': result[0].is_water,
+                    'duration': result[0].duration,
+                    'status': result[0].status,
+                }
+                // console.log("data is",data);
+            }
+
+            else if(testId == 7){
+                data = {
+                    // 'id': result[0].id,
+                    // 'type': result[0].type,
+                    // 'runs': result[0].runs,
+                    // 'isWater': result[0].is_water,
+                    // 'duration': result[0].duration,
+                    // 'status': result[0].status,
+                }
+                // console.log("data is",data);
+            }
+
+            else{
+                data = result
+            }
+
+            return res.status(200).send({
+                response : data
+            })
+        }
+    })
+}
+
+const getSingularTests = (req, res) => {
+
+    console.log(req.query.id);
+    return 0;
+
+    db.query(`SELECT * FROM level_test_type`,(err,result) => {
+        if (err) {
+            return res.status(400).send ({
+                "err in select query": err
+            })
+        } else if(result.length){
+            return res.status(200).send({
+                response : result
+            })
+        }
+    })
+}
+
+module.exports = {
+    getTests
+}
